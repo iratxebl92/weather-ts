@@ -1,0 +1,84 @@
+/*
+Guia para acceder a las varianles de entorno con vite --> https://vite.dev/guide/env-and-mode
+
+
+segun la guía, el archivo .env.local no se va a subir a git , como si estuviese en el .gitignore
+La variable de entorno tiene que empezar por VITE_ --> 
+VITE_API_KEY=a007713031d09538223aa24f6c9e2704
+
+
+console.log(import.meta.env) --> aqui se muestran las variables de entorno que hay por defecto y también las que creemos nosotros, siempre y cuando empiecen con VITE_
+
+
+Una buena manera de tipar APIS ya que son asincronas, es Zod. Y Valibot es alternativa a Zod
+
+
+
+-----------------------DEJO AQUI APUNTES DE Valibot-------------------------------------
+
+ --Valibot
+const WeatherValibot = object({
+  name: string(),
+  main: object({
+    temp: number(),
+    temp_max: number(),
+    temp_min: number(),
+  }),
+});
+
+type Weather = InferOutput<typeof WeatherValibot>;
+
+--Valibot
+const { data: weatherResult } = await axios<Weather>(weatherUrl);
+const result = parse(WeatherValibot, weatherResult);
+console.log(result);
+if (result) {
+  console.log(weatherResult.name);
+} else {
+  console.log("Respuesta mal formada");
+}
+
+
+
+--------------------------------------
+*/
+
+
+/*
+TYPE GUARD O ASSERTION
+function isWeatherResponse(weather: unknown): weather is Weather  {
+   Cuando no sabemos el tipo, es mejor unkkown que any
+  Revisar que el clima contenga el objeto que buscamos
+  1 --> Que weather exista (Boolean(weather))
+  2 --> Que weather sea tipo objeto
+  3 --> Accedemos a cada uno de los elementos y comprobando cada uno de sus tipos
+
+  Es dificil de mantener
+  return (
+    Boolean(weather) && 
+    typeof weather === 'object' && 
+    typeof (weather as Weather).name === 'string' && 
+    typeof  (weather as Weather).main.temp === 'number' && 
+    typeof  (weather as Weather).main.temp_max === 'number' &&
+    typeof  (weather as Weather).main.temp_min === 'number'
+  )
+  
+}
+*/
+
+      // Castear el type
+      //  const {data: weatherResult} = await axios<Weather>(weatherUrl)
+      //  console.log(weatherResult.name)
+      // console.log(weatherResult.main.temp_max)
+      /*
+       Type Guards
+        const { data: weatherResult } = await axios<Weather>(weatherUrl);
+      console.log(weatherResult.main.temp_max);
+      const result = isWeatherResponse(weatherResult)
+      console.log(result, "result") //Si da true es que es correcto el tipado
+      if(result) {
+      console.log(weatherResult.name)
+      } else {
+        console.log('Respuesta mal formada')
+      }
+*/
