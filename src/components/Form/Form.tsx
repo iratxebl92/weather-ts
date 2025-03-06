@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react"
 import { countries } from "../../data/countries"
-import styles from './Form.module.css'
+import './Form.css'
 import { SearchType } from '../../types/index';
 import { Alert } from '../Alert/Alert';
 
@@ -36,12 +36,12 @@ export const Form = ({fetchWeather}: FormProps) => {
 
   return (
    <form 
-    className={styles.form}
+    className='form'
     onSubmit={handleSubmit }
 
    >
     {alert && <Alert> {alert} </Alert>}
-    <div  className={styles.field}>
+    <div  className='field'>
         <label htmlFor="city">Ciudad</label>
         <input 
             type="text" 
@@ -52,7 +52,7 @@ export const Form = ({fetchWeather}: FormProps) => {
             onChange={handleChange}
         />
     </div>
-    <div  className={styles.form}>
+    <div  className='form'>
         <label htmlFor="country">Pais:</label>
         <select 
             name="country" 
@@ -72,7 +72,7 @@ export const Form = ({fetchWeather}: FormProps) => {
         ))}
         </select>
     </div>
-        <input className={styles.submit} type="submit" value='Consultar clima' />
+        <input className='submit' type="submit" value='Consultar clima' />
    </form>
   )
 }
